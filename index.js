@@ -44,10 +44,15 @@ async function run() {
         app.post('/jwt', async (req, res) => {
             const user = req.body;
             // console.log(user);
+            if (!user) {
+                return res.status(400).json({ error: 'User data is required' });
+            }
             const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
-            console.log(token);
-            res.send({ token });
+            // console.log(token);
+            res.json({ token });
         })
+     
+        
 
         // middlewares 
         const veryfyToken = (req, res, next) => {
